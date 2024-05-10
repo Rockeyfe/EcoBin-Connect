@@ -9,6 +9,9 @@
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+     <!-- Add Leaflet Routing Machine CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" integrity="sha512-ZzR8mPZi2lGjJ0EiPqJCU6c0pIKk2Ug4LU5ckVM4IaJZ9qD+p5LvQlYnKN0fQnL2NQsfx1wUqJje+qf83Qn/Ag==" crossorigin=""/>
+
         <style>
         html, body, #map {
             width: 100%;
@@ -34,6 +37,7 @@
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="data/dustbinpoint_1.js"></script>
         <script src="data/COLLECTIONPOINTcpg_2.js"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -48,8 +52,73 @@
                 map.fitBounds(bounds_group.getBounds());
             }
         }
+
+
+
+
+function findNearestDustbinAndLocate(dustbinLocations,userLocation){
+    //find
+    var nearestDustbin;
+    var nearestDistance = Infinity;
+
+    dustbinLocations.forEach(
+        function(dLocation){
+            var distance = userLocation.distanceTo(dLocation);
+            if (distance < nearestDistance) {
+                nearestDustbin = dLocation;
+                nearestDistance = distance;
+            }
+        }
+    )
+    //locate
+        // Draw route from user's location to nearest dustbin
+        L.Routing.control({
+        waypoints: [
+            L.latLng(userLocation.lat, userLocation.lng),
+            L.latLng(nearestDustbin.lat, nearestDustbin.lng)
+        ],
+        routeWhileDragging: true, // Optional, to update the route as the user drags the marker,
+        // change the line styling as you want
+        lineOptions: {
+            styles: [{color: 'blue', opacity: 1, weight: 5}],
+           
+        }
+    }).on('routesfound', function(e) {
+        var routes = e.routes;
+
+        var summary = routes[0].summary;
+        alert('Total distance: ' + summary.totalDistance + ' meters');
+    }).addTo(map)
+
+
+
+    
+
+}
+        // Add event listener for when the user's location is found
+map.on('locationfound', function(e) {
+    var userLocation = e.latlng;
+   
+    // Calculate distance to each dustbin and find the closest one
+    var dustbinLocations = []
+
+    layer_dustbinpoint_1.eachLayer(function(layer) {
+        dustbinLocations.push(layer.getLatLng());
+    });
+    findNearestDustbinAndLocate(dustbinLocations,userLocation);
+});
+
+// Add event listener for when the user clicks on the locate control
+map.on('locationerror', function() {
+    alert("Location access denied.");
+});
+
+
+
+
+
         map.createPane('pane_OpenStreetMap_0');
-        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 0;
         var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             pane: 'pane_OpenStreetMap_0',
             opacity: 1.0,
@@ -229,6 +298,17 @@
             text: 'Search',
             title: 'Testing'
         }).addTo(map);
+        osmGeocoder.on('markgeocode', function(e) {
+            var userLocation = e.geocode.center;
+   
+   
+   var dustbinLocations = []
+
+   layer_dustbinpoint_1.eachLayer(function(layer) {
+       dustbinLocations.push(layer.getLatLng());
+   });
+   findNearestDustbinAndLocate(dustbinLocations,userLocation);
+        });
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
