@@ -67,7 +67,7 @@ function displayDataForCurrentDay() {
     const timestamps = dataForCurrentDay.map(entry => new Date(entry.timestamp).toLocaleTimeString());
     const ctx = document.getElementById('myChart').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: timestamps,
             datasets: [{
