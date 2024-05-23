@@ -227,6 +227,65 @@
       </div>
     </section><!-- End Why Us Section -->
 
+    <!-- ======= Realtime Monitoring ======= -->
+    <section id="chart" class="why-us section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Realtime Monitoring</h2>
+          <p>
+            View the current status of the smart bins
+          </p>
+        </div>
+
+        <canvas id="myChart" height="100"></canvas>
+        <div id="dataContainer"></div>
+        <div class="button-group" >
+            <button id="prevDay">Previous Day</button>
+            <button id="nextDay">Next Day</button>
+        </div>
+
+        <!-- <div class="row">
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bxl-dribbble"></i></div>
+              <h4><a href="">Smart dustbin</a></h4>
+              <p>We offer a smart IoT based dustbin tracking the filling level and perform automatic lid operation </p>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4><a href="education.html ">Advice and Education</a></h4>
+              <p>We offer proper education on how to re-use, re-cycle and reduce the waste </p>
+            </div>
+          </div>
+
+          
+
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-tachometer"></i></div>
+              <h4><a href="">Waste campaigns</a></h4>
+              <p>We offer the waste initiative throught the campaign named after "STAND FOR A SMART CAMPUS"</p>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-layer"></i></div>
+              <h4><a href="">waste prediction</a></h4>
+              <p>In dependence of machine learning , we predict the waste type classified as either plastic , metal , paper or glass to support the recycling initiatives within our campus</p>
+            </div>
+          </div>
+
+        </div> -->
+
+      </div>
+    </section><!-- End realtime monitoring -->
+
+
     
 
     <!-- ======= Services Section ======= -->
@@ -580,9 +639,13 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/firebase.js"></script>
+
 
 </body>
 
