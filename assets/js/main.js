@@ -1,9 +1,3 @@
-/**
-* Template Name: Arsha - v4.9.1
-* Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 (function() {
   "use strict";
 
@@ -255,3 +249,46 @@
   });
 
 })()
+
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const subjectInput = document.getElementById('subject');
+const messageInput = document.getElementById('message');
+const contactForm = document.getElementById('contact-form');
+const submitBtn = document.getElementById('submit');
+const sentMessage = document.querySelector('.sent-message');
+const loader = document.querySelector('.loader');
+
+const baseUrl = 'http://localhost:8383/';
+
+contactForm.addEventListener('submit', submitForm);
+
+async function submitForm(e){
+  e.preventDefault();
+  loader.classList.remove('hidden');
+  const formFields = {
+    name: nameInput.value,
+    email: emailInput.value,
+    subject: subjectInput.value,
+    message: messageInput.value,
+  }
+
+  const url = baseUrl + 'postcontacts'
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formFields)
+  });
+
+  if (response.ok){
+    sentMessage.classList.remove('hidden');
+    loader.classList.add('hidden');
+    
+    setTimeout(() => {
+      sentMessage.classList.add('hidden');
+    }, 3000)
+  }
+}

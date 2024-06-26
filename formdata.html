@@ -4,15 +4,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Complaint Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
+    <style>
+        .formFooter.f6.branding21{
+            display: hidden !important;
+        }
 
-<body class="bg-gray-200">
-    <div class="w-1/2 container my-4 mx-auto">
+        #footer > .thankyou-footer-wrapper {
+            display: none !important;
+        }
+
+        #footer{
+            display: none;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>ECOBIN CONNECT | Report a problem </title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+    <!-- Log -->
+    <link href="assets/img/logo eco.png" rel="icon">
+  
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+  
+    <script defer async>
+      document.addEventListener('DOMContentLoaded', function() {
+        // setting global variables
+        window.botId = 2103
+        
+        // create div with id = sarufi-chatbox
+        const div = document.createElement("div")
+        div.id = "sarufi-chatbox"
+        document.body.appendChild(div)
+    
+        // create and attach script tag
+        const script = document.createElement("script")
+        script.crossOrigin = true
+        script.type = "module"
+        script.src = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/vanilla-js/script.js"
+        document.head.appendChild(script)
+    
+        // create and attach css
+        const style = document.createElement("link")
+        style.crossOrigin = true
+        style.rel = "stylesheet"
+        style.href = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/vanilla-js/style.css"
+        document.head.appendChild(style)
+      });
+    </script>
+    
+  
+  </head>
+
+<header id="header" class="fixed-top ">
+    <div class="container2 d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">ECOBIN CONNECT</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+<!--       <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/index.html#home">Home</a></li>
+          <li><a class="nav-link scrollto" href="/index.html#about">About</a></li>
+          <li><a class="nav-link scrollto" href="/index.html#services">Services</a></li>
+          <!-- <li><a class="nav-link   scrollto" href="#portfolio">Portfolio</a></li> -->
+          <li><a class="nav-link scrollto" href="/index.html#team">Team</a></li>
+          <li><a class="nav-link scrollto" href="/index.html#contact">Contact</a></li>
+           <!--<li><a class="getstarted scrollto" href="#about">Collect</a></li>-->
+           <li><a class="nav-link scrollto" href="assets\img\NavigatethroughEcoBinConnect_PDF_2023-09-11084852.350958_2.pdf">Help</a></li>
+           <li><a class="nav-link" href="formdata.html">Report a problem</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+<body class="bg-[#F3F3FE] pt-[60px]">
+    <!-- <div class="w-1/2 container my-4 mx-auto">
         <div class="text-center py-12">
             <h1 class="text-4xl">Complaint Form</h1>
         <p>Be the first to work with us and keep our sorrounding clean</p>
         </div>
-        <form>
+        <form class="complain-form" id="complain-form" >
             <div class="grid gap-6 mb-6 md:grid-cols-1">
                 <div>
                     <label for="problem" class="block mb-2 text-sm font-medium text-gray-900">What waste
@@ -54,9 +144,9 @@
                                     d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
                             </svg>
                         </div>
-                        <input type="text" id="input-group-1"
+                        <input type="text" id="email"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="name@flowbite.com">
+                            placeholder="name@email.com">
                     </div>
                     <label for="website-admin"
                         class="block mb-2 text-sm font-medium text-gray-900">Phone number</label>
@@ -69,7 +159,7 @@
                                     d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
                             </svg>
                         </span>
-                        <input type="tel" id="website-admin"
+                        <input type="number" id="phone_number"
                             class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="phone number">
                     </div>
@@ -79,14 +169,10 @@
                 <div class="relative mb-6">
                     <label for="severity" class="block mb-2 text-sm font-medium text-gray-900">How
                         severe is your problem?</label>
-                    <input id="labels-range-input" type="range" value="1" min="1" max="5"
+                    <input id="rating" type="range" value="1" min="1" max="5"
                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                     <span class="text-sm text-gray-900 dark:text-gray-900 absolute start-0 -bottom-6">Min (1)</span>
-                    <span
-                        class="text-sm text-gray-900 dark:text-gray-900 absolute start-1/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">2</span>
-                    <span
-                        class="text-sm text-gray-900 dark:text-gray-900 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">3</span>
-                    <span class="text-sm text-gray-900 dark:text-gray-900 absolute end-0 -bottom-6">Max (4)</span>
+                    <span class="text-sm text-gray-900 dark:text-gray-900 absolute end-0 -bottom-6">Max (5)</span>
                 </div>
 
             </div>
@@ -109,7 +195,7 @@
                             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
                             </p>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden" />
+                        <input id="image" type="file" class="hidden" />
                     </label>
                 </div>
 
@@ -119,14 +205,14 @@
             <div class="mb-6">
                 <label for="severity"
                     class="block mb-2 text-sm font-medium text-gray-900">Latitude</label>
-                <input type="text" id="disabled-input" aria-label="disabled input"
+                <input type="text" id="latitude"
                     class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    value="-6.8235">
+                    >
                 <label for="severity"
                     class="block mb-2 text-sm font-medium text-gray-900">Longitude</label>
-                <input type="text" id="disabled-input-2" aria-label="disabled input 2"
+                <input type="text" id="longitude"
                     class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    value="39.2695">
+                    >
 
             </div>
 
@@ -135,7 +221,27 @@
         </form>
 
     </div>
-    </div>
+    </div> -->
+    <script type="text/javascript" src="https://form.jotform.com/jsform/232349114973560"></script>
+    <script src="assets/js/complain.js"></script>
+    <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/firebase.js"></script>
 </body>
+
 
 </html>

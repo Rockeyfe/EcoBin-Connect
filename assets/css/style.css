@@ -5,12 +5,12 @@ body {
 }
 
 a {
-  color: #0f9625;
+  color: #47b2e4;
   text-decoration: none;
 }
 
 a:hover {
-  color: #fffff;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -21,6 +21,29 @@ h4,
 h5,
 h6 {
   font-family: "Jost", sans-serif;
+}
+
+.hidden{
+  display: none;
+}
+
+.main-btn {
+  border: none;
+  background-color: #4084a3;
+  padding: 10px 20px;
+  margin: 0 2px;
+  color: white;
+}
+
+a.main-btn{
+  color: white;
+}
+a.main-btn:hover{
+  color: white;
+}
+
+.main-btn:hover{
+  background-color: #206b8e;
 }
 
 
@@ -63,7 +86,8 @@ h6 {
 #header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 15px 0;
+  padding: 15px 10px;
+  background: #4084a3;
 }
 
 #header.header-scrolled,
@@ -256,7 +280,7 @@ h6 {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(22, 122, 39, 0.9);
+  background: #4084a3;
   transition: 0.3s;
   z-index: 999;
 }
@@ -834,6 +858,10 @@ section {
   transition: ease-in-out 0.3s;
 }
 
+.services .icon-box h4 a:hover {
+  color: #1c5f32 !important;
+}
+
 .services .icon-box p {
   line-height: 24px;
   font-size: 14px;
@@ -845,7 +873,7 @@ section {
 }
 
 .services .icon-box:hover h4 a {
-  color: #377e3;
+  color: #47b2e4;
 }
 
 /*--------------------------------------------------------------
@@ -1093,7 +1121,7 @@ section {
   font-weight: 700;
   margin-bottom: 5px;
   font-size: 20px;
-  color: #0b7745;
+  color: #47b2e4;
 }
 
 .team .member span {
@@ -1613,7 +1641,7 @@ section {
 --------------------------------------------------------------*/
 #footer {
   font-size: 14px;
-  background: #339153;
+  background: #4084a3;
 }
 
 #footer .footer-newsletter {
@@ -1630,7 +1658,7 @@ section {
   padding: 0;
   line-height: 1;
   font-weight: 600;
-  color: #377e37;
+  color: #4084a3;
 }
 
 #footer .footer-newsletter form {
@@ -1696,10 +1724,14 @@ section {
   color: #5e5e5e;
 }
 
+.logo .me-auto{
+  color: #47b2e4:
+}
+
 #footer .footer-top h4 {
   font-size: 16px;
   font-weight: bold;
-  color: #139b57;
+  color: #47b2e4;
   position: relative;
   padding-bottom: 12px;
 }
@@ -1740,7 +1772,7 @@ section {
 
 #footer .footer-top .footer-links ul a:hover {
   text-decoration: none;
-  color: #1d7915;
+  color: #47b2e4;
 }
 
 #footer .footer-top .social-links a {
@@ -1777,6 +1809,10 @@ section {
 #footer .credits {
   float: right;
   font-size: 13px;
+}
+
+.social-links a {
+  background: #4084a3 !important;
 }
 
 #footer .credits a {
