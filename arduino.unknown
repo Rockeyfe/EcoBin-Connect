@@ -1,0 +1,265 @@
+#include <SoftwareSerial.h>
+#include <Servo.h>
+#define GSM_RX_PIN 2
+#define GSM_TX_PIN 3
+SoftwareSerial gsmSerial(GSM_RX_PIN, GSM_TX_PIN);
+#define FIREBASE_HOST "https://ecobin-connect-default-rtdb.firebaseio.com/"
+#define FIREBASE_SECRET "vpEmp924J63wzKkvaQlcOo7ZRZI2spjqZAh6Yyo3"
+#define led1 11
+#define led2 12
+#define led3 13
+#define led4 7
+const String PHONE_1 = "0672154950";
+#include <Ultrasonic.h>
+Ultrasonic ultrasonic1(9, 10);
+Ultrasonic ultrasonic2(5, 6);
+int distance1;
+int distance2;
+Servo servo;
+#define servoPin 8
+unsigned long previousMillisServo = 0;
+unsigned long previousMillisFirebase = 0;
+unsigned long previousMillisLED = 0;
+const long intervalServo = 700;
+const long intervalLED = 100;
+const long interval = 3000; // Send data every 5min
+const long intervalsms = 1000;
+unsigned long previousMillisSms = 0;
+
+const long intervalSms = 1000;
+unsigned long previousMillisSmS = 0;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT);
+ // servo.attach(servoPin);
+  gsmSerial.begin(9600);
+  delay(1000);
+  servo.write(0);
+  Serial.println("Initializing GSM...");
+  initGSM();
+}
+
+void loop() {
+  // send_sms("Level of dustbin is full", PHONE_1);
+
+  distance1 = ultrasonic1.read();
+  distance2 = ultrasonic2.read();
+  unsigned long currentMillis = millis();
+  //Serial.println( distance2);
+
+  if (currentMillis - previousMillisFirebase >= interval)
+  {
+    previousMillisFirebase = currentMillis;
+    String jsonData = "{\"sensor\": \"distance\", \"value\": 25.5}";
+    sendDataToFirebase(jsonData);
+  }
+  /*
+  if (currentMillis - previousMillisServo >= intervalServo) {
+    previousMillisServo = currentMillis;
+    controlServo();
+  }
+  if (currentMillis - previousMillisLED >= intervalLED) {
+    previousMillisLED = currentMillis;
+    controlsmsled();
+  }
+  if (currentMillis - previousMillisSmS >= intervalSms) {
+    previousMillisSmS = currentMillis;
+    sendsms();
+  }
+  */
+}
+
+void controlServo()
+{
+  static unsigned long previousServoMoveMillis = 0;
+  static int servoState = 0;
+
+  unsigned long currentMillis = millis();
+  const unsigned long servoMovementDuration = 2000;
+
+  switch (servoState) {
+    case 0: // Initial state
+      if (distance1 <= 20) {
+        servo.write(130); // Move servo to position
+        previousServoMoveMillis = currentMillis; // Record the time when movement started
+        servoState = 1; // Move to the next state
+      }
+      break;
+
+    case 1: // Servo movement state
+      if (currentMillis - previousServoMoveMillis >= servoMovementDuration) {
+        servo.write(0); // Move servo back to initial position
+        servoState = 0; // Move back to initial state
+      }
+      break;
+
+    default:
+      break;
+  }
+
+}
+
+void controlsmsled()
+{
+  if (distance2 <= 10 )
+  {
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, HIGH);
+    digitalWrite(led4, LOW);
+    //send_sms("Level of dustbin is full", PHONE_1);
+  }
+
+  if ( distance2 >= 20  )
+  {
+
+   digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led4, HIGH);
+  }
+  if (distance2 >= 20 && distance2 >= 30  )
+  {
+    
+     digitalWrite(led1, HIGH);
+    digitalWrite(led2, LOW);
+    digitalWrite(led4, LOW);
+  }
+
+
+}
+
+void initGSM() {
+  // Initialize GSM module
+  Serial.println("Sending AT command: AT");
+  gsmSerial.println("AT");
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending AT command: AT+CGATT=1");
+  gsmSerial.println("AT+CGATT=1");
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending AT command: AT+SAPBR=3,1,\"APN\",\"internet\"");
+  gsmSerial.println("AT+SAPBR=3,1,\"APN\",\"internet\"");
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending AT command: AT+SAPBR=1,1");
+  gsmSerial.println("AT+SAPBR=1,1");
+  delay(2000);
+  readSerialData();
+  digitalWrite(led3, HIGH);
+}
+
+void sendDataToFirebase(String data) {
+  // Build the HTTP request
+  Serial.println("Sending AT command: AT+HTTPINIT");
+  gsmSerial.println("AT+HTTPINIT");
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending AT command: AT+HTTPPARA=\"CID\",1");
+  gsmSerial.println("AT+HTTPPARA=\"CID\",1");
+  delay(1000);
+  readSerialData();
+
+  String url = "https://" + String(FIREBASE_HOST) + "json?auth=" + String(FIREBASE_SECRET);
+  Serial.print("Sending AT command: AT+HTTPPARA=\"URL\",\"");
+  Serial.print(url);
+  Serial.println("\"");
+  gsmSerial.print("AT+HTTPPARA=\"URL\",\"");
+  gsmSerial.print(url);
+  gsmSerial.println("\"");
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending AT command: AT+HTTPPARA=\"CONTENT\",\"application/json\"");
+  gsmSerial.println("AT+HTTPPARA=\"CONTENT\",\"application/json\"");
+  delay(1000);
+  readSerialData();
+
+  Serial.print("Sending AT command: AT+HTTPDATA=");
+  Serial.println(data.length());
+  gsmSerial.print("AT+HTTPDATA=");
+  gsmSerial.println(data.length());
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending data...");
+  gsmSerial.println(data);
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Sending AT command: AT+HTTPACTION=1");
+  gsmSerial.println("AT+HTTPACTION=1");
+  delay(1000);
+  readSerialData();
+
+  Serial.println("Data sent to Firebase.");
+}
+
+void readSerialData() {
+  while (gsmSerial.available()) {
+    Serial.write(gsmSerial.read());
+  }
+}
+void send_sms(String text, String phone)
+{
+  const unsigned long smsInterval = 1000;
+  static unsigned long previousMillis = 0;
+  static int smsState = 0;
+
+  unsigned long currentMillis = millis();
+
+  switch (smsState)
+  {
+    case 0:
+      if (currentMillis - previousMillis >= smsInterval)
+      {
+        previousMillis = currentMillis;
+        Serial.println("Sending SMS....");
+        gsmSerial.print("AT+CMGF=1\r");
+        gsmSerial.print("AT+CMGS=\"" + phone + "\"\r");
+        gsmSerial.print(text);
+        gsmSerial.write(0x1A); // Send SMS termination character
+        smsState = 1; // Move to the next state
+      }
+      break;
+
+    case 1:
+      if (gsmSerial.find("OK"))
+      {
+        smsState = 0;
+      }
+      break;
+  }
+}
+
+void sendsms()
+{
+  if (distance2 <= 10 )
+  {
+    send_sms("Level of dustbin is full", PHONE_1);
+  }
+
+  if ( distance2 <= 20  )
+  {
+    send_sms("Level of dustbin is middle", PHONE_1);
+  }
+}
+
+
+
+/*if (distance1 <= 20) {
+   servo.write(130);
+   delay(3000);
+  }
+  else
+  {
+   servo.write(0);
+  }
+*/
