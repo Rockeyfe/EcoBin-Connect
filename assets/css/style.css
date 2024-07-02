@@ -10,7 +10,7 @@ a {
 }
 
 a:hover {
-  color: #ffffff;
+  color: #47b2e4;
   text-decoration: none;
 }
 
@@ -1375,8 +1375,12 @@ section {
   transition: 0.3s;
 }
 
+a.collapsed:active{
+  color: #1d7915;
+}
+
 .faq .faq-list a.collapsed:hover {
-  color: #2f911e;
+  color: #2f911e !important;
 }
 
 .faq .faq-list a.collapsed .icon-show {

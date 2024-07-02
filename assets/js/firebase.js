@@ -85,14 +85,6 @@ function displayDataForCurrentDay() {
         }
     });
 }
-document.getElementById('prevDay').addEventListener('click', () => {
-    currentDayIndex--;
-    displayDataForCurrentDay();
-});
-document.getElementById('nextDay').addEventListener('click', () => {
-    currentDayIndex++;
-    displayDataForCurrentDay();
-});
 fetchData();
 
 async function addData(distance) {
